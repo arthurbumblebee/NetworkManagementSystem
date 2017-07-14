@@ -1,99 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <title>Robot Explorer</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robot Explorer</title>
-    <meta name="author" content="Radim Bartos">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <meta name="author" content="Arthur Y. Makumbi (Bumblebee)">
+    <meta name="description" content="search, update, delete and control the robots">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="robotScripts.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
-    <body>
-        <div class="container">
-            <h1>Robot Explorer</h1>
+<body>
+    <div class="container">
+        <h2>Robot Explorer</h2>
 
-            <form class="well">
-                <fieldset>
-                    <legend>Select a Robot to look up</legend>
-                    <select id="robotoptions">
-                        <option selected disabled>Select One</option>
-                    </select>
+        <form class="well">
+            <fieldset>
+                <legend>Select a Robot to look up</legend>
+<!--form-control  -->
+                <select class="form-control input-sm" id="robotoptions">
+                    <option selected disabled>Select One</option>
+                </select>
 
-                    <button type="submit" class="btn btn-primary" disabled="disabled" id="search"><span class="glyphicon glyphicon-search"></span> Search</button>
+                <button type="submit" class="btn btn-primary" disabled="disabled" id="search"><span class="glyphicon glyphicon-search"></span> Search</button>
 
-                </fieldset>
-            </form>
+            </fieldset>
+        </form>
 
-            <div class="well" id="resultTable" style="display:none;">
+        <div class="well" id="resultTable" style="display:none;">
 
-                <div class="btn-group btn-group pull-right">
-                    <button type="button" class="btn btn-primary" id="edit"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-                    <button type="button" class="btn btn-primary" id="delete"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-                </div>
-                <div class="btn-group btn-group pull-right">
-                    <button type="button" class="btn btn-primary hidden" id="save"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
-                    <button type="button" class="btn btn-primary hidden" id="cancel"><span class="glyphicon"> </span> Cancel</button>
-                </div>
-
-                <fieldset>
-                    <legend>Results</legend>
-                </fieldset>
-
-                <table class="table table-striped table-bordered
-					 table-condensed" style="margin-bottom:0px;
-					 background-color:white;">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Name</td>
-                            <td id="name"></td>
-                        </tr>
-                        <tr>
-                            <td>IP address</td>
-                            <td id="ip"></td>
-                            <!--137.146.188.249-->
-                        </tr>
-                        <tr>
-                            <td>MAC address</td>
-                            <td id="mac"> </td>
-                        </tr>
-                        <tr>
-                            <td>Location</td>
-                            <td id="location"> </td>
-                        </tr>
-                        <tr>
-                            <td>Battery Added</td>
-                            <td id="battery"></td>
-                            <!--2017-06-03 16:33:13-->
-                        </tr>
-                        <tr>
-                            <td>Usage</td>
-                            <td id="usage"> </td>
-                        </tr>
-                        <tr>
-                            <td>Photo</td>
-                            <td id="photo"></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-                <p>
-                    </br>
-                </p>
-
+            <div class="btn-group btn-group pull-right">
+                <button type="button" class="btn btn-primary" id="edit"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                <button type="button" class="btn btn-primary" id="delete"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            </div>
+            <div class="btn-group btn-group pull-right">
+                <button type="button" class="btn btn-primary hidden" id="save"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+                <button type="button" class="btn btn-primary hidden" id="cancel"><span class="glyphicon"> </span> Cancel</button>
             </div>
 
+            <fieldset>
+                <legend>Results</legend>
+            </fieldset>
+
+            <table class="table table-striped table-bordered
+                    table-condensed" style="margin-bottom:0px;
+                    background-color:white;">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td id="name"></td>
+                    </tr>
+                    <tr>
+                        <td>IP address</td>
+                        <td id="ip"></td>
+                        <!--137.146.188.249-->
+                    </tr>
+                    <tr>
+                        <td>MAC address</td>
+                        <td id="mac"> </td>
+                    </tr>
+                    <tr>
+                        <td>Location</td>
+                        <td id="location"> </td>
+                    </tr>
+                    <tr>
+                        <td>Battery Added</td>
+                        <td id="battery"></td>
+                        <!--2017-06-03 16:33:13-->
+                    </tr>
+                    <tr>
+                        <td>Usage</td>
+                        <td id="usage"> </td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td id="photo"></td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <p>
+                </br>
+            </p>
         </div>
-    </body>
+    </div>
+</body>
 
 </html>

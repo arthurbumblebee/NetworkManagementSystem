@@ -61,7 +61,7 @@ $(function() {
                 $("#location").html(results[0].location);
                 $("#battery").html(results[0].batteryAddedDate);
                 $("#usage").html(results[0].usageStats);
-                $("#photo").html("<img src='./images/" + results[0].photo + ".jpg' alt='" + results[0].robotName + "' style = 'width:256; height:512px;' />");
+                $("#photo").html("<img class='img-responsive' src='./images/" + results[0].photo + ".jpg' alt='" + results[0].robotName + "' style = 'width:256; height:512px;' />");
                 $("#resultTable").show();
             },
             error: function(e) {
