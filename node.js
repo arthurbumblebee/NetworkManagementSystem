@@ -44,6 +44,7 @@ http.createServer(function(request, response) {
             response.end(JSON.stringify(result));
         });
     }
+
     // https://github.com/mysqljs/mysql#performing-queries
     if (queryaction == 'update') {
         // update robot information
@@ -78,24 +79,22 @@ http.createServer(function(request, response) {
         });
 
     }
-
     fs.exists(pathname, function(exist) {
         if (!exist) {
             // if the file is not found, return 404
             response.statusCode = 404;
             response.end(`File ${pathname} not found!`);
         
-        }else {
-            // read file from file system
-            fs.readFile(pathname, function(err, data) {
-                if (err) {
-                    response.statusCode = 500;
-                    response.end(`Error getting the file: ${err}.`);
-                } else {
-                    response.end(data);
-                }
-            });
         }
+        // read file from file system
+        fs.readFile(pathname, function(err, data) {
+            if (err) {
+                response.statusCode = 500;
+                response.end(`Error getting the file: ${err}.`);
+            } else {
+                response.end(data);
+            }
+        });
     });
 }).listen(8000);
 
