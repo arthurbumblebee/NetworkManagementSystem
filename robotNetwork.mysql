@@ -4,6 +4,7 @@
 # use yingli
 # yingliAdmin
 # show tables;
+-- NNaxie#960.
 
 # mysql> source file_name
 -- mysql> \. file_name

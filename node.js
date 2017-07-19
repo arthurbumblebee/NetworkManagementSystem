@@ -38,13 +38,29 @@ http.createServer(function(request, response) {
     var query = querystring.parse(url.parse(request.url).query);
     var queryaction = dot.remove('queryAction', query);
     console.log("querying ", queryaction);
+    if(queryaction == "showLocation"){
+        var sqlshowLocation = "SELECT * FROM robotLocation WHERE robotID = ?";
+        var locateItem = dot.remove("robotid", query);
+        console.log("robot location : ", locateItem);
+        connection.query(sqlshowLocation, [locateItem], function(err, result){
+            if(err){
+                console.log("error occured while trying to get location");
+                response.statusCode = 500;
+                response.end(`Error getting the location: ${err}.`);
+            }
+            else{
+                console.log("robot location", JSON.stringify(result));
+                response.writeHead(200, { 'content-type': 'application/json' });
+                response.end(JSON.stringify(result));
+            }
+        });
+    }
     if (queryaction == 'populate'){
         connection.query("SELECT * FROM ROBOTS", function(err, result) {
             response.writeHead(200, { 'content-type': 'application/json' });
             response.end(JSON.stringify(result));
         });
     }
-
     // https://github.com/mysqljs/mysql#performing-queries
     if (queryaction == 'update') {
         // update robot information

@@ -16,22 +16,18 @@ function populateSelect() {
                 options.append($("<option />").val(this.robotID).text(this.robotName));
             });
         },
-        error: function(e) {
-            alert("datafile not implemented " + e.status + ": " + e.statusText + "");
-        }
     });
 }
 
 // populate the dropdown menu when the document has loaded
 $(populateSelect);
 
-
 //script for switching status of buttons table-->
 $(document).on('change', "#robotoptions", function() {
     $("#search").prop('disabled', false);
 });
 
-// useless i think
+// useless
 $(document).on('input', "#resultTable", function() {
     $("#edit").hide();
     $("#delete").hide();
@@ -61,12 +57,9 @@ $(function() {
                 $("#location").html(results[0].location);
                 $("#battery").html(results[0].batteryAddedDate);
                 $("#usage").html(results[0].usageStats);
-                $("#photo").html("<img class='img-responsive' src='./images/" + results[0].photo + ".jpg' alt='" + results[0].robotName + "' style = 'width:256; height:512px;' />");
+                $("#photo").html("<img class='img-responsive center-block' src='./images/" + results[0].photo + ".jpg' alt='" + results[0].robotName + "' style = 'width:256; height:512px;' />");
                 $("#resultTable").show();
             },
-            error: function(e) {
-                alert("datafile not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"./datafile\"");
-            }
         });
     });
 });
@@ -112,6 +105,37 @@ $(function() {
                 alert("update not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"./datafile\"");
             }
         });
+    });
+});
+
+// script to handle location history
+$(function(){
+    // show location
+    $("#showlocation").click(function(){
+        $("#locationTable").show();
+        $("#showlocation").hide();
+        $("#hideLocationGroup").show();
+        $.ajax({
+            data:"queryAction=showLocation" + "&robotid=" + $('#robotoptions').val(),
+            type:"GET",
+            success:function(data){
+                var locations = data;
+                var locationTable = $("#locationTable");
+                $.each(locations, function() {
+                    locationTable.append($("<tr><td>"+ this.RLocID +"</td><td>"+
+                        this.x +"</td><td>"+ this.y +"</td><td>"+ this.t +"</td><td>"+ this.time +"</td></tr>"));
+                });
+            },
+            error:function(){
+                alert("error occured while getting location");
+            }
+        });
+    });
+    // hide location
+    $("#hidelocation").click(function(){
+        $("#locationTable").hide();
+        $("#showlocation").show();
+        $("#hideLocationGroup").hide();
     });
 });
 
