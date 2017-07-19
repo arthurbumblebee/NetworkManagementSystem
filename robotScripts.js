@@ -43,6 +43,10 @@ $(function() {
         $("#delete").show();
         $("#save").addClass("hidden");
         $("#cancel").addClass("hidden");
+        $("#search").prop('disabled', true);
+        $("#locationTable").hide();
+        $("#showlocation").show();
+        $("#hideLocationGroup").hide();
 
         f.preventDefault();
         $.ajax({
@@ -112,9 +116,11 @@ $(function() {
 $(function(){
     // show location
     $("#showlocation").click(function(){
+        $("#locationTable tbody>tr").remove();
         $("#locationTable").show();
         $("#showlocation").hide();
         $("#hideLocationGroup").show();
+        $("#locationTable").append($("<tr><td>1</td><td>5.2257</td><td>5.2257</td><td>2.71775</td><td>2017-07-12 13:25:26</td></tr>"));
         $.ajax({
             data:"queryAction=showLocation" + "&robotid=" + $('#robotoptions').val(),
             type:"GET",
