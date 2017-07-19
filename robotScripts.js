@@ -113,35 +113,55 @@ $(function() {
 });
 
 // script to handle location history
-$(function(){
+$(function() {
     // show location
-    $("#showlocation").click(function(){
+    $("#showlocation").click(function() {
         $("#locationTable tbody>tr").remove();
         $("#locationTable").show();
         $("#showlocation").hide();
         $("#hideLocationGroup").show();
         $("#locationTable").append($("<tr><td>1</td><td>5.2257</td><td>5.2257</td><td>2.71775</td><td>2017-07-12 13:25:26</td></tr>"));
         $.ajax({
-            data:"queryAction=showLocation" + "&robotid=" + $('#robotoptions').val(),
-            type:"GET",
-            success:function(data){
+            data: "queryAction=showLocation" + "&robotid=" + $('#robotoptions').val(),
+            type: "GET",
+            success: function(data) {
                 var locations = data;
                 var locationTable = $("#locationTable");
                 $.each(locations, function() {
-                    locationTable.append($("<tr><td>"+ this.RLocID +"</td><td>"+
-                        this.x +"</td><td>"+ this.y +"</td><td>"+ this.t +"</td><td>"+ this.time +"</td></tr>"));
+                    locationTable.append($("<tr><td>" + this.RLocID + "</td><td>" +
+                        this.x + "</td><td>" + this.y + "</td><td>" + this.t + "</td><td>" + this.time + "</td></tr>"));
                 });
             },
-            error:function(){
+            error: function() {
                 alert("error occured while getting location");
             }
         });
     });
-    // hide location
-    $("#hidelocation").click(function(){
+});
+
+// hide location
+$(function() {
+    $("#hidelocation").click(function() {
         $("#locationTable").hide();
         $("#showlocation").show();
         $("#hideLocationGroup").hide();
+    });
+});
+
+// delete location history
+$(function() {
+    $("#deletelocations").click(function() {
+        if (confirm('Are you sure you want to delete the location history?')) {
+            $.ajax({
+                data: "queryAction=deletelocations" + "&robotid=" + $("#robotoptions").val(),
+                type: "GET",
+                success: function() {
+                    $("#locationTable").hide();
+                    $("#showlocation").show();
+                    $("#hideLocationGroup").hide();
+                }
+            });
+        }
     });
 });
 
