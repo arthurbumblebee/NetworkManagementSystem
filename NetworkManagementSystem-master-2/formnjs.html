@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Robot Explorer</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Arthur Y. Makumbi (Bumblebee)">
+    <meta name="description" content="search, update, delete and control the robots">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="robotScripts.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+			.margin {
+    			     	margin-top: 20px;
+    				margin-bottom: 20px;
+   			 	margin-right: 0px;
+   				margin-left: 70px;
+			}
+
+			.picdiv{
+    				height: 570px;
+    				width: 530px;
+				border:1px solid black;;
+			}
+			.bigbutton {
+    			     	margin-top: 20px;
+    				margin-bottom: 20px;
+   			 	margin-right: 0px;
+   				margin-left: 180px;
+			}
+			.smallbutton {
+    			     	margin-top: 0px;
+    				margin-bottom: 0px;
+   			 	margin-right: 20px;
+   				margin-left: 20px;
+			}
+		</style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Robot Explorer</h2>
+
+        <form class="well">
+            <fieldset>
+                <legend>Select a Robot to look up</legend>
+                <div class="col-xs-8">  
+                    <select class="selectpicker form-control" id="robotoptions" title="Choose one of the following...">
+                        <option selected disabled>Select One</option> 
+                    </select>
+                </div> 
+
+                <button type="submit" class="btn btn-primary" disabled="disabled" id="search"><span class="glyphicon glyphicon-search"></span> Search</button>
+
+            </fieldset>
+        </form>
+
+        <div class="well" id="resultTable" style="display:nones;">
+
+            <div class="row">
+                <div class="col-md-6" id="photo">
+                    <img class='img-responsive center-block' src='./images/cameraDolly1.jpg' alt='robot' style = 'width:256; height:512px;' />
+                </div>
+
+                <div class="col-md-6">
+                     <div class="well"> 
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-primary" id="edit"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                            <button type="button" class="btn btn-primary" id="delete"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                        </div>
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-primary hidden" id="save"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+                            <button type="button" class="btn btn-primary hidden" id="cancel"><span class="glyphicon"> </span> Cancel</button>
+                        </div>
+
+                        <fieldset>
+                            <legend>Details</legend>
+                        </fieldset>
+                        
+                        <table class="table table-striped table-bordered
+                                table-condensed" style="margin-bottom:0px;
+                                background-color:white;">
+                            <thead>
+                                <tr>
+                                    <th>Attribute</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td id="name"></td>
+                                </tr>
+                                <tr>
+                                    <td>IP address</td>
+                                    <td id="ip"></td>
+                                    <!--137.146.188.249-->
+                                </tr>
+                                <tr>
+                                    <td>MAC address</td>
+                                    <td id="mac"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Battery Added</td>
+                                    <td id="battery"></td>
+                                    <!--2017-06-03 16:33:13-->
+                                </tr>
+                                <tr>
+                                    <td>Usage</td>
+                                    <td id="usage"> </td>
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <div>
+                                <button type="button" class="btn btn-success pull-right" id="showlocation"><span class="glyphicon glyphicon-map-marker"></span> Show Locations</button>
+                                <div class="btn-group pull-right" id="hideLocationGroup" style="display:none">
+                                    <button type="button" class="btn btn-warning" id="deletelocations"><span class="glyphicon glyphicon-trash"></span> Delete Locations</button>
+                                    <button type="button" class="btn btn-success" id="hidelocation"><span class="glyphicon glyphicon-map-marker"></span> Hide Locations</button>
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-bordered
+                                table-condensed" id="locationTable" style="margin-bottom:0px;
+                                background-color:white; display:none" >
+                                <thead>
+                                    <tr>
+                                        <th>LocationID</th>
+                                        <th>x</th>
+                                        <th>y</th>
+                                        <th>t</th>
+                                        <th>time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>01</td>
+                                        <td>5.2257</td>
+                                        <td>5.2257</td>
+                                        <td>2.71775</td>
+                                        <td>2017-07-12 13:25:26</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+				<div class="container">
+				<div class="row">
+				<div class="picdiv col-lg-6" id="image">
+				<img id = "picture" src="result.png" alt="Robot path" style="width:500px;height:500px;" class="img-rounded">
+				<br>
+				<button class="btn btn-success margin" id="B1">Start Animation</button>
+				<button class="btn btn-danger margin" id="B2">Stop Animation</button>
+				</div>
+
+
+
+				<div class="col-lg-6 container" id="control">
+				<div class="row">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				</div>
+				<div class="row">
+				<button class="btn btn-primary col-lg-4 bigbutton" id="forward">Go Forward</button>
+				</div>
+				<div class="row">
+				<button class="btn btn-primary col-lg-3 smallbutton" id="left">Turn Left</button>
+				<button class="btn btn-info col-lg-3 smallbutton" id="stop">Stop</button>
+				<button class="btn btn-primary col-lg-3 smallbutton" id="right">Turn Right</button>
+				
+				</div>	
+				<div class="row">			
+				<button class="btn btn-primary col-lg-4 bigbutton" id="backward">Go Backward</button>
+				</div>
+				</div>
+				</div>
+				</div>
+
+
+
+    </div>
+	<script>
+	$("#B1").click(function(f) {
+		f.preventDefault();
+		$("#picture").show();	
+		interval=setInterval(function()
+		{	
+			$.ajax({
+				url: "/update",
+				type: "GET",
+				success: function(data) {
+					if(data=="diff"){
+						$("#picture").attr('src','./result.png?'+new Date().getTime());				
+					}
+				},
+				error: function(e) {
+					alert("There is an error: "+e.status+": "+e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/update\"");
+				}
+			});
+		}, 2000);
+	});
+
+	$("#B2").click(function(f) {
+		f.preventDefault();
+		clearInterval(interval);
+	});
+
+	$("#left").click(function(f) {
+		f.preventDefault();
+		$.ajax({
+			url: "/move",
+			data: "c=a",
+			type: "GET",
+			success: function(data) {
+				;
+			},
+			error: function(e) {
+				alert("Turn left not implemented: "+e.status+": "+e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+			}
+		});
+	});
+
+	$("#right").click(function(f) {
+		f.preventDefault();
+		$.ajax({
+			url: "/move",
+			data: "c=d",
+			type: "GET",
+			success: function(data) {
+				;
+			},
+			error: function(e) {
+				alert("Turn right not implemented: "+e.status+": "+e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+			}
+		});
+	});
+
+	$("#forward").click(function(f) {
+		f.preventDefault();
+		$.ajax({
+			url: "/move",
+			data: "c=w",
+			type: "GET",
+			success: function(data) {
+				;
+			},
+			error: function(e) {
+				alert("Forward not implemented: "+e.status+": "+e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+			}
+		});
+	});
+
+	$("#backward").click(function(f) {
+		f.preventDefault();
+		$.ajax({
+			url: "/move",
+			data: "c=s",
+			type: "GET",
+			success: function(data) {
+				;
+			},
+			error: function(e) {
+				alert("Backward not implemented: "+e.status+": "+e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+			}
+		});
+	});
+
+	$("#stop").click(function(f) {
+		f.preventDefault();
+		$.ajax({
+			url: "/move",
+			data: "c=x",
+			type: "GET",
+			success: function(data) {
+				;
+			},
+			error: function(e) {
+				alert("Stop not implemented: "+e.status+": "+e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+			}
+		});
+	});
+	</script>
+</body>
+
+</html>
