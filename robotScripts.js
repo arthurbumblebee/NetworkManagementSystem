@@ -2,7 +2,6 @@
 
 // function to populate the robots dropdown menu
 function populateSelect() {
-    alert("populating");
     $('#robotoptions').empty();
     $.ajax({
         data: "queryAction=populate",
@@ -11,7 +10,7 @@ function populateSelect() {
             // var robots = JSON.parse(data);
             var robots = data;
             var options = $("#robotoptions");
-            // options.append($("<option selected disabled>Select One</option>"));
+            options.append($("<option selected disabled>Select One</option>"));
             // options.append($("<option value='22'>Robot</option>"));
             // options.append($("<option value='20'>Robot2</option>"));
             $.each(robots, function() {
@@ -34,33 +33,28 @@ $(function refresh() {
 
 // restore previous robots details
 function restorePreviousRobot() {
-    $('#robotoptions option[value="65"]').attr('selected', 'selected');
 
     var currentrobot = localStorage.getItem("currentrobot");
     var robotname = localStorage.getItem("robotname");
 
     if (currentrobot !== 'null') {
         alert("restoring " + currentrobot);
-        $("#robotoptions select").val(currentrobot);
+        $("#robotoptions").val(currentrobot);
         localStorage.removeItem("currentrobot");
         localStorage.removeItem("robotname");
         searchRobot();
     }
-    alert("robot to restore " + currentrobot);
 
 }
 
 // script for searching for a robot
 function searchRobot() {
-    alert("searching");
-    // $("form").submit(function(e) {
-    // e.preventDefault();
     // hide or show buttons as necessary
     $("#edit").show();
     $("#delete").show();
     $("#save").addClass("hidden");
     $("#cancel").addClass("hidden");
-    // $("#search").prop('disabled', true);
+    $("#search").prop('disabled', true);
     $("#locationTable").hide();
     $("#showlocation").show();
     $("#hideLocationGroup").hide();
@@ -81,8 +75,6 @@ function searchRobot() {
             $("#resultTable").show();
         },
     });
-    // });
-    // });
 }
 
 // script for deleting robot record
@@ -257,12 +249,10 @@ Date.createFromMysql = function(mysql_string) {
 // populate the dropdown menu when the document has loaded
 // $(populateSelect);
 // $(restorePreviousRobot);
-// /*
 $(function() {
     populateSelect();
     restorePreviousRobot();
 });
-// */
 
 //script for switching status of buttons table-->
 $(document).on('change', "#robotoptions", function() {
@@ -278,12 +268,9 @@ $(document).on('input', "#resultTable", function() {
 });
 
 // handling submit case
-// /*
 $(function() {
     $("form").submit(function(e) {
         e.preventDefault();
         searchRobot();
-        // return false;
     });
 });
-// */
