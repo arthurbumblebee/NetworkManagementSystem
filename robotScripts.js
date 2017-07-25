@@ -2,6 +2,7 @@
 
 // function to populate the robots dropdown menu
 function populateSelect() {
+    alert("populating");
     $('#robotoptions').empty();
     $.ajax({
         data: "queryAction=populate",
@@ -10,8 +11,9 @@ function populateSelect() {
             // var robots = JSON.parse(data);
             var robots = data;
             var options = $("#robotoptions");
-            options.append($("<option option selected disabled>Select One</option>"));
-            // options.append($("<option value='21'>Robot</option>"));
+            // options.append($("<option selected disabled>Select One</option>"));
+            // options.append($("<option value='22'>Robot</option>"));
+            // options.append($("<option value='20'>Robot2</option>"));
             $.each(robots, function() {
                 options.append($("<option />").val(this.robotID).text(this.robotName));
             });
@@ -19,57 +21,72 @@ function populateSelect() {
     });
 }
 
-// populate the dropdown menu when the document has loaded
-$(populateSelect);
-
-//script for switching status of buttons table-->
-$(document).on('change', "#robotoptions", function() {
-    $("#search").prop('disabled', false);
+// refresh case
+$(function refresh() {
+    window.onbeforeunload = function() {
+        var currentrobot = $("#robotoptions").val();
+        var robotname = $("#robotoptions").text();
+        localStorage.setItem("currentrobot", currentrobot);
+        localStorage.setItem("robotname", robotname);
+        // return 'Are you sure you want to leave?';
+    };
 });
 
-// useless
-$(document).on('input', "#resultTable", function() {
-    $("#edit").hide();
-    $("#delete").hide();
-    $("#save").removeClass("hidden");
-    $("#cancel").removeClass("hidden");
-});
+// restore previous robots details
+function restorePreviousRobot() {
+    $('#robotoptions option[value="65"]').attr('selected', 'selected');
 
-// script for handling submit case-->
-$(function() {
-    $("form").submit(function(f) {
-        // hide or show buttons as necessary
-        $("#edit").show();
-        $("#delete").show();
-        $("#save").addClass("hidden");
-        $("#cancel").addClass("hidden");
-        $("#search").prop('disabled', true);
-        $("#locationTable").hide();
-        $("#showlocation").show();
-        $("#hideLocationGroup").hide();
+    var currentrobot = localStorage.getItem("currentrobot");
+    var robotname = localStorage.getItem("robotname");
 
-        f.preventDefault();
-        $.ajax({
-            data: "queryAction=search" + "&robot=" + $('#robotoptions').val(),
-            type: "GET",
-            success: function(data) {
-                // var results = JSON.parse(data);
-                var results = data;
-                $("#name").html(results[0].robotName);
-                $("#ip").html(results[0].IPaddress);
-                $("#mac").html(results[0].MACaddress);
-                $("#location").html(results[0].location);
-                $("#battery").html(results[0].batteryAddedDate);
-                $("#usage").html(results[0].usageStats);
-                $("#photo").html("<img class='img-responsive center-block' src='./images/" + results[0].photo + ".jpg' alt='" + results[0].robotName + "' style = 'width:256; height:512px;' />");
-                $("#resultTable").show();
-            },
-        });
+    if (currentrobot !== 'null') {
+        alert("restoring " + currentrobot);
+        $("#robotoptions select").val(currentrobot);
+        localStorage.removeItem("currentrobot");
+        localStorage.removeItem("robotname");
+        searchRobot();
+    }
+    alert("robot to restore " + currentrobot);
+
+}
+
+// script for searching for a robot
+function searchRobot() {
+    alert("searching");
+    // $("form").submit(function(e) {
+    // e.preventDefault();
+    // hide or show buttons as necessary
+    $("#edit").show();
+    $("#delete").show();
+    $("#save").addClass("hidden");
+    $("#cancel").addClass("hidden");
+    // $("#search").prop('disabled', true);
+    $("#locationTable").hide();
+    $("#showlocation").show();
+    $("#hideLocationGroup").hide();
+
+    $.ajax({
+        data: "queryAction=search" + "&robot=" + $('#robotoptions').val(),
+        type: "GET",
+        success: function(data) {
+            // var results = JSON.parse(data);
+            var results = data;
+            $("#name").html(results[0].robotName);
+            $("#ip").html(results[0].IPaddress);
+            $("#mac").html(results[0].MACaddress);
+            $("#location").html(results[0].location);
+            $("#battery").html(results[0].batteryAddedDate);
+            $("#usage").html(results[0].usageStats);
+            $("#photo").html("<img class='img-responsive center-block' src='./images/" + results[0].photo + ".jpg' alt='" + results[0].robotName + "' style = 'width:256; height:512px;' />");
+            $("#resultTable").show();
+        },
     });
-});
+    // });
+    // });
+}
 
 // script for deleting robot record
-$(function() {
+$(function deleteRobot() {
     $("#delete").click(function() {
         if (confirm('Are you sure you want to delete this record?')) {
             $.ajax({
@@ -86,7 +103,7 @@ $(function() {
 });
 
 // script for saving table input
-$(function() {
+$(function saveTableInput() {
     var targetEditablefields = $("#battery, #ip");
     $("#save").click(function() {
         // hide or show buttons as necessary
@@ -113,7 +130,7 @@ $(function() {
 });
 
 // script to handle location history
-$(function() {
+$(function showLocationHistory() {
     // show location
     $("#showlocation").click(function() {
         $("#locationTable tbody>tr").remove();
@@ -140,7 +157,7 @@ $(function() {
 });
 
 // hide location
-$(function() {
+$(function hideLocationTable() {
     $("#hidelocation").click(function() {
         $("#locationTable").hide();
         $("#showlocation").show();
@@ -149,7 +166,7 @@ $(function() {
 });
 
 // delete location history
-$(function() {
+$(function deleteLocations() {
     $("#deletelocations").click(function() {
         if (confirm('Are you sure you want to delete the location history?')) {
             $.ajax({
@@ -166,7 +183,7 @@ $(function() {
 });
 
 // script for editing table cells
-$(function() {
+$(function editDetails() {
     $("#edit").click(function() {
         // hide or show buttons as necessary
         $("#edit").hide();
@@ -223,39 +240,6 @@ $(function() {
     });
 });
 
-/*
-// refresh case
-$(function() {
-    $(window).on('beforeunload', function() {
-        var currentrobot = $("#robotoptions").text();
-        sessionStorage.setItem("#robotoptions", currentrobot.val);
-        // return "Are you sure you want to navigate away?";
-        return 'Are you sure you want to leave?';
-    });
-
-    // window.onload 
-    $(window).on('unload', function() {
-        alert("");
-        alert("reloading");
-        var currentrobot = sessionStorage.getItem(currentrobot);
-        if (currentrobot !== null) {
-            $("#robotoptions").val = currentrobot;
-            // document.getElemenyById("name").value = name;
-        }
-    });
-});
-
-$(window).on('beforeunload', function() {
-    var e = $.Event('webapp:page:closing');
-    $(window).trigger(e); // let other modules determine whether to prevent closing
-    if (e.isDefaultPrevented()) {
-        // e.message is optional
-        return e.message || 'You have unsaved stuff. Are you sure to leave?';
-    }
-});
-
-*/
-
 // convert mysql timestamp to js time
 Date.createFromMysql = function(mysql_string) {
     var t, result = null;
@@ -269,3 +253,37 @@ Date.createFromMysql = function(mysql_string) {
 
     return result;
 };
+
+// populate the dropdown menu when the document has loaded
+// $(populateSelect);
+// $(restorePreviousRobot);
+// /*
+$(function() {
+    populateSelect();
+    restorePreviousRobot();
+});
+// */
+
+//script for switching status of buttons table-->
+$(document).on('change', "#robotoptions", function() {
+    $("#search").prop('disabled', false);
+});
+
+// useless
+$(document).on('input', "#resultTable", function() {
+    $("#edit").hide();
+    $("#delete").hide();
+    $("#save").removeClass("hidden");
+    $("#cancel").removeClass("hidden");
+});
+
+// handling submit case
+// /*
+$(function() {
+    $("form").submit(function(e) {
+        e.preventDefault();
+        searchRobot();
+        // return false;
+    });
+});
+// */
