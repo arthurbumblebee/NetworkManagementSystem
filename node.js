@@ -39,6 +39,7 @@ http.createServer(function(request, response) {
     var queryaction = dot.remove('queryAction', query);
     console.log("querying ", queryaction);
 
+
     if (queryaction == "showLocation") {
         var sqlshowLocation = "SELECT * FROM robotLocation WHERE robotID = ?";
         var locateItem = dot.remove("robotid", query);
