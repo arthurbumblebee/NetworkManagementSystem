@@ -11,10 +11,8 @@ var dot = require('dot-object');
 
 // Create a server 
 http.createServer(function(request, response) {
-    // parse URL
-    const parsedUrl = url.parse(request.url);
-    // extract URL path
-    var pathname = `.${parsedUrl.pathname}`;
+    var pathname = url.parse(request.url).pathname;
+    console.log("pathname original", pathname.substr(1));
 
     // maps file extention to MIME typere
     const map = {
@@ -104,23 +102,17 @@ http.createServer(function(request, response) {
         });
 
     }
-    fs.exists(pathname, function(exist) {
-        if (!exist) {
-            // if the file is not found, return 404
-            response.statusCode = 404;
-            response.end(`File ${pathname} not found!`);
 
+    // read file from file system
+    fs.readFile(pathname.substr(1), function(err, data) {
+        if (err) {
+            response.statusCode = 500;
+            response.end(`Error getting the file: ${err}.`);
+        } else {
+            response.end(data);
         }
-        // read file from file system
-        fs.readFile(pathname, function(err, data) {
-            if (err) {
-                response.statusCode = 500;
-                response.end(`Error getting the file: ${err}.`);
-            } else {
-                response.end(data);
-            }
-        });
     });
+    // });
 }).listen(8000);
 
 console.log('Server running at http://localhost:8000/');
