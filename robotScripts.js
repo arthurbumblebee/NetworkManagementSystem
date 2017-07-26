@@ -245,7 +245,113 @@ Date.createFromMysql = function(mysql_string) {
 
     return result;
 };
+$(function() {
+    $("#B1").click(function(f) {
+        f.preventDefault();
+        $("#picture").show();
+        interval = setInterval(function() {
+            $.ajax({
+                url: "/update",
+                type: "GET",
+                success: function(data) {
+                    if (data == "diff") {
+                        $("#picture").attr('src', './result.png?' + new Date().getTime());
+                    }
+                },
+                error: function(e) {
+                    alert("There is an error: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/update\"");
+                }
+            });
+        }, 2000);
+    });
+});
 
+$(function() {
+    $("#B2").click(function(f) {
+        f.preventDefault();
+        clearInterval(interval);
+    });
+});
+
+$(function() {
+    $("#left").click(function(f) {
+        f.preventDefault();
+        $.ajax({
+            url: "/move",
+            data: "c=a",
+            type: "GET",
+            success: function(data) {;
+            },
+            error: function(e) {
+                alert("Turn left not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+            }
+        });
+    });
+});
+
+$(function() {
+    $("#right").click(function(f) {
+        f.preventDefault();
+        $.ajax({
+            url: "/move",
+            data: "c=d",
+            type: "GET",
+            success: function(data) {;
+            },
+            error: function(e) {
+                alert("Turn right not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+            }
+        });
+    });
+});
+
+$(function() {
+    $("#forward").click(function(f) {
+        f.preventDefault();
+        $.ajax({
+            url: "/move",
+            data: "c=w",
+            type: "GET",
+            success: function(data) {;
+            },
+            error: function(e) {
+                alert("Forward not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+            }
+        });
+    });
+});
+
+$(function() {
+    $("#backward").click(function(f) {
+        f.preventDefault();
+        $.ajax({
+            url: "/move",
+            data: "c=s",
+            type: "GET",
+            success: function(data) {;
+            },
+            error: function(e) {
+                alert("Backward not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+            }
+        });
+    });
+});
+
+$(function() {
+    $("#stop").click(function(f) {
+        f.preventDefault();
+        $.ajax({
+            url: "/move",
+            data: "c=x",
+            type: "GET",
+            success: function(data) {;
+            },
+            error: function(e) {
+                alert("Stop not implemented: " + e.status + ": " + e.statusText + "\n\nIf you are looking at the file posted a part of the assignment description, the AJAX response is not provided, it is your task to implement it. If you served the file from your own server, it did not respond correctly to the AJAX request for \"/move\"");
+            }
+        });
+    });
+});
 // populate the dropdown menu when the document has loaded
 // $(populateSelect);
 // $(restorePreviousRobot);
