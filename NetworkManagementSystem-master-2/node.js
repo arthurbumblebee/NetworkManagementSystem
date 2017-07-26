@@ -7,7 +7,7 @@ var child_process = require('child_process');
 var path = require('path');
 var mysql = require('mysql');
 var dot = require('dot-object');
-var ppmbin = require ('ppm-bin');
+var ppmbin = require('ppm-bin');
 
 
 // Create a server 
@@ -106,94 +106,85 @@ http.createServer(function(request, response) {
         });
 
     }
-	if (pathname == './result.png') {
-	//how to load picture?
-	  console.log('loading the image');
-	  //testing ppm-bin
-	  ppmbin.convert('result.ppm', 'result.png',function(err){;});
-	  setTimeout(function() {
-    		fs.readFile(pathname.substr(1), function (err, data) {
-		console.log(pathname.substr(1));
-		  if (err) {
-			  console.log(err);
-			  // HTTP Status: 404 : NOT FOUND
-			  // Content Type: text/plain
-			  response.writeHead(404, {'Content-Type': 'text/html'});
-		  } 
-		  else {
-			  // Page found
-			  // HTTP Status: 200 : OK
-			  // Content Type: text/plain
-			  response.writeHead(200, {'Content-Type': 'text/html'});
-			
-			  // Write the content of the file to response body
-			  response.write(data);
-		  }
-		  // Send the response body
-		  response.end();
-	  	});
-	  }, 1000);
-	  
-    	} 
+    if (pathname == './result.png') {
+        //how to load picture?
+        console.log('loading the image');
+        //testing ppm-bin
+        ppmbin.convert('result.ppm', 'result.png', function(err) {; });
+        setTimeout(function() {
+            fs.readFile(pathname.substr(1), function(err, data) {
+                console.log(pathname.substr(1));
+                if (err) {
+                    console.log(err);
+                    // HTTP Status: 404 : NOT FOUND
+                    // Content Type: text/plain
+                    response.writeHead(404, { 'Content-Type': 'text/html' });
+                } else {
+                    // Page found
+                    // HTTP Status: 200 : OK
+                    // Content Type: text/plain
+                    response.writeHead(200, { 'Content-Type': 'text/html' });
 
-	
-	else if (pathname == './update'){
-		console.log('asking for picture updates');
-		connection.query("SELECT x,y,t FROM robotLocation WHERE robotID = 58 ORDER BY RLocID DESC LIMIT 2", 
-		function (err, result, fields) {
-    			if (err) throw err;
-			response.writeHead(200, {'Content-Type': 'text/html'});
-			if(result[0].x == result[1].x && result[0].y == result[1].y && result[0].t == result[1].t){
-				console.log("same");
-				response.write("same");
-			}
-			else{
-				console.log("diff");
-				response.write("diff");			
-			}
-			response.end();
-  		});
-		console.log('finish update');
-	
-	}	
+                    // Write the content of the file to response body
+                    response.write(data);
+                }
+                // Send the response body
+                response.end();
+            });
+        }, 1000);
 
-	else if(pathname == './move'){
-	  var query = querystring.parse(url.parse(request.url).query);
-	  console.log("IP info " + JSON.stringify(query) + " received.");
-	  var dataString = '';
-	  
-	  var spawn = require('child_process').spawn;
-	  var py = spawn('python', ['move.py']);
-	  py.stdout.on('data', function(data) {
-		  dataString = String(data);
-		  console.log(dataString);
-	  });
-	  py.stdout.on('end', function() {
-		response.end();
-	  });
-	  py.stdin.write(JSON.stringify(query));
-	  py.stdin.end();
-	  
-	}
+    } else if (pathname == './update') {
+        console.log('asking for picture updates');
+        connection.query("SELECT x,y,t FROM robotLocation WHERE robotID = 58 ORDER BY RLocID DESC LIMIT 2",
+            function(err, result, fields) {
+                if (err) throw err;
+                response.writeHead(200, { 'Content-Type': 'text/html' });
+                if (result[0].x == result[1].x && result[0].y == result[1].y && result[0].t == result[1].t) {
+                    console.log("same");
+                    response.write("same");
+                } else {
+                    console.log("diff");
+                    response.write("diff");
+                }
+                response.end();
+            });
+        console.log('finish update');
 
-    else {
-	fs.exists(pathname, function(exist) {
-        if (!exist) {
-            // if the file is not found, return 404
-            response.statusCode = 404;
-            response.end(`File ${pathname} not found!`);
+    } else if (pathname == './move') {
+        var query = querystring.parse(url.parse(request.url).query);
+        console.log("IP info " + JSON.stringify(query) + " received.");
+        var dataString = '';
 
-        }
-        // read file from file system
-        fs.readFile(pathname, function(err, data) {
-            if (err) {
-                response.statusCode = 500;
-                response.end(`Error getting the file: ${err}.`);
-            } else {
-                response.end(data);
-            }
+        var spawn = require('child_process').spawn;
+        var py = spawn('python', ['move.py']);
+        py.stdout.on('data', function(data) {
+            dataString = String(data);
+            console.log(dataString);
         });
-    });
+        py.stdout.on('end', function() {
+            response.end();
+        });
+        py.stdin.write(JSON.stringify(query));
+        py.stdin.end();
+
+    } else {
+        fs.exists(pathname, function(exist) {
+            if (!exist) {
+                // if the file is not found, return 404
+                response.statusCode = 404;
+                response.end(`File ${pathname} not found!`);
+
+            }
+            // read file from file system
+            fs.readFile(pathname, function(err, data) {
+                if (err) {
+                    response.statusCode = 500;
+                    response.end(`Error getting the file: ${err}.`);
+                } else {
+                    response.end(data);
+                }
+            });
+        });
     }
 }).listen(8000);
 
