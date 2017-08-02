@@ -15,12 +15,12 @@ Files and Descriptions
 
 Operation
 
-  •	ssh into the kili dwarf using your Colby email and credentials on your terminal and you will do everything from there. Remember to use the –Y flag in order to allow you to open Firefox
-  •	open Firefox using: firefox &
-  •	change into the working directory in which all your files are and run the node.js file to open the server like this: node node.js
-  •	you can then run the website inputting this URL in firefox: http://localhost:8000/formnjs.html
-  •	you can access the database by running: 
-    o	mysql -u {username} –p
-    o	input the password
-    o	use yingli
-    o	use yingliAdmin
+  1.	ssh into the kili dwarf using your Colby email and credentials on your terminal and you will do everything from there. Remember to use the –Y flag in order to allow you to open Firefox
+  2.	open Firefox using: firefox &
+  3.	change into the working directory in which all your files are and run the node.js file to open the server like this: node node.js
+  4.	you can then run the website inputting this URL in firefox: http://localhost:8000/formnjs.html
+  5.	you can access the database by running: 
+    a.	mysql -u {username} –p
+    b.	input the password
+    c.	use yingli
+    d.	use yingliAdmin
