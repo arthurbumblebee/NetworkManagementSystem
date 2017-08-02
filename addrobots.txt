@@ -1,5 +1,0 @@
-INSERT INTO ROBOTS(robotName, IPaddress, MACaddress, photo) VALUES ('Robotic arm tank', '137.146.188.249', 'b8:27:eb:e4:e8:42', 'roboticArmTank');
-INSERT INTO ROBOTS(robotName, IPaddress, MACaddress, photo) VALUES ('Self balancing robot', '137.146.188.246', 'b8:27:eb:66:7d:96', 'selfBalancingRobot' );
-INSERT INTO ROBOTS(robotName, IPaddress, MACaddress, photo) VALUES ('Robotic Bartender', '137.146.188.250', 'b8:27:eb:cc:57:4c', 'roboticBarTender' );
-INSERT INTO ROBOTS(robotName, IPaddress, MACaddress, photo) VALUES ('Camera Dolly 1', '137.146.188.243', 'b8:27:eb:22:0c:c5', 'cameraDolly1');
-INSERT INTO ROBOTS(robotName, IPaddress, MACaddress, photo) VALUES ('Camera Dolly 2', '137.146.188.242', 'b8:27:eb:78:c8:07', 'cameraDolly2');

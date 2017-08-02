@@ -1,0 +1,13 @@
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
+INSERT INTO robotLocation(robotID) VALUES ('72');
