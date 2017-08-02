@@ -1,3 +1,7 @@
+# Arthur Makumbi
+# Summer Research 2017
+# original file to communicate client and server side
+
 import sys
 import json
 
