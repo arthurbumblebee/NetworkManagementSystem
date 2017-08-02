@@ -1,3 +1,8 @@
+# Arthur Makumbi
+# Summer Research 2017
+# run this on the raspberry Pi terminal to communicate with the client keyboard and send 
+# input to the arduino board
+
 #! /usr/bin/python
 
 import serial

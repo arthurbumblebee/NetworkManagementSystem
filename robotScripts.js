@@ -3,6 +3,7 @@ Arthur Makumbi and Jiaheng Hu
 Summer Research 2017
 This program contains all the scripts used to make the website interactive
 */
+
 /*jshint esversion: 6 */
 
 // function to populate the robots dropdown menu

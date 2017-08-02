@@ -1,5 +1,9 @@
 /**
+* Arthur Makumbi
+* Summer Research 2017
+
  * Using MegaPi to control the robotic arm through Bluetooth communication between Mega and RPi3 to get input
+ * Upload this file to the arduino board of the robot
  * w - forward
  * a - left
  * s - Backward
