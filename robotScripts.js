@@ -1,3 +1,8 @@
+/*
+Arthur Makumbi and Jiaheng Hu
+Summer Research 2017
+This program contains all the scripts used to make the website interactive
+*/
 /*jshint esversion: 6 */
 
 // function to populate the robots dropdown menu
@@ -25,8 +30,8 @@ $(function refresh() {
     window.onbeforeunload = function() {
         var currentrobot = $("#robotoptions").val();
         var robotname = $("#robotoptions").text();
-        localStorage.setItem("currentrobot", currentrobot);
-        localStorage.setItem("robotname", robotname);
+        sessionStorage.setItem("currentrobot", currentrobot);
+        sessionStorage.setItem("robotname", robotname);
         // return 'Are you sure you want to leave?';
     };
 });
@@ -34,14 +39,14 @@ $(function refresh() {
 // restore previous robots details
 function restorePreviousRobot() {
 
-    var currentrobot = localStorage.getItem("currentrobot");
-    var robotname = localStorage.getItem("robotname");
+    var currentrobot = sessionStorage.getItem("currentrobot");
+    var robotname = sessionStorage.getItem("robotname");
 
     if (currentrobot !== 'null') {
         alert("restoring " + currentrobot);
         $("#robotoptions").val(currentrobot);
-        localStorage.removeItem("currentrobot");
-        localStorage.removeItem("robotname");
+        sessionStorage.removeItem("currentrobot");
+        sessionStorage.removeItem("robotname");
         searchRobot();
     }
 
@@ -58,6 +63,7 @@ function searchRobot() {
     $("#locationTable").hide();
     $("#showlocation").show();
     $("#hideLocationGroup").hide();
+    $("#robotControl").show();
 
     $.ajax({
         data: "queryAction=search" + "&robot=" + $('#robotoptions').val(),
@@ -86,6 +92,7 @@ $(function deleteRobot() {
                 type: "GET",
                 success: function() {
                     $("#resultTable").hide();
+                    $("#robotControl").hide();
                     $(populateSelect);
                     $("#search").prop('disabled', true);
                 }
@@ -129,7 +136,6 @@ $(function showLocationHistory() {
         $("#locationTable").show();
         $("#showlocation").hide();
         $("#hideLocationGroup").show();
-        $("#locationTable").append($("<tr><td>1</td><td>5.2257</td><td>5.2257</td><td>2.71775</td><td>2017-07-12 13:25:26</td></tr>"));
         $.ajax({
             data: "queryAction=showLocation" + "&robotid=" + $('#robotoptions').val(),
             type: "GET",
@@ -245,6 +251,10 @@ Date.createFromMysql = function(mysql_string) {
 
     return result;
 };
+
+/*
+Beginning of Jeff's section
+*/
 $(function() {
     $("#B1").click(function(f) {
         f.preventDefault();
@@ -352,12 +362,16 @@ $(function() {
         });
     });
 });
+/*
+End of Jeff's section
+*/
+
 // populate the dropdown menu when the document has loaded
 // $(populateSelect);
 // $(restorePreviousRobot);
 $(function() {
     populateSelect();
-    restorePreviousRobot();
+    // restorePreviousRobot();
 });
 
 //script for switching status of buttons table-->

@@ -1,3 +1,9 @@
+/*
+Arthur Makumbi and Jiaheng Hu
+Summer Research 2017
+this program is used to perform all the server side operations which include: 
+fetching data from the database, and sending it to the client side (website)
+*/
 /*jshint esversion: 6 */
 var http = require('http');
 var fs = require('fs');
@@ -105,7 +111,7 @@ http.createServer(function(request, response) {
 
     }
 
-    if (pathname == '/result.png') {
+    if (pathname == '/results.png') {
         //how to load picture?
         console.log('loading the image');
         //testing ppm-bin
@@ -118,6 +124,7 @@ http.createServer(function(request, response) {
                     // HTTP Status: 404 : NOT FOUND
                     // Content Type: text/plain
                     response.writeHead(404, { 'Content-Type': 'text/html' });
+                    response.end(err);
                 } else {
                     // Page found
                     // HTTP Status: 200 : OK
@@ -125,10 +132,11 @@ http.createServer(function(request, response) {
                     response.writeHead(200, { 'Content-Type': 'text/html' });
 
                     // Write the content of the file to response body
-                    response.write(data);
+                    response.end(data);
+                    console.log("it should show right now");
                 }
                 // Send the response body
-                response.end();
+
             });
         }, 1000);
 

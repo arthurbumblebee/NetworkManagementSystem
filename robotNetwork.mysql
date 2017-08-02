@@ -2,7 +2,7 @@
 # ssh amakumbi@kili.cs.colby.edu
 # mysql -u amakumbi -p
 # use yingli
-# yingliAdmin
+# or use yingliAdmin
 # show tables;
 # mysql> source file_name
 -- mysql> \. file_name
